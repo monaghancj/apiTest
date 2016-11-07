@@ -13,8 +13,11 @@ var dal = {
   createMobile: createMobile,
   getMobile: getMobile,
   listMobiles: listMobiles,
+  updateMobile: updateMobile,
+  deleteMobile: deleteMobile,
   createView: createView,
-  bulkCreate: bulkCreate
+  bulkCreate: bulkCreate,
+  getByMake: getByMake
 }
 
 //  -------   Helpers / Utility  ------   //
@@ -54,6 +57,35 @@ function listDocs(sortBy, startKey, limit, callback) {
 
 }
 
+function updateDoc(data, callback) {
+    if (typeof data == "undefined" || data === null) {
+        return callback(new Error('400Missing data for update'));
+    } else if (data.hasOwnProperty('_id') !== true) {
+        return callback(new Error('400Missing id property from data'));
+    } else if (data.hasOwnProperty('_rev') !== true) {
+        return callback(new Error('400Missing rev property from data'));
+    } else {
+        db.put(data, function(err, response) {
+            if (err) return callback(err);
+            if (response) return callback(null, response);
+        });
+    }
+}
+
+function deleteDoc(data, callback) {
+  if (typeof data == "undefined" || data === null) {
+      return callback(new Error('400Missing data for delete'));
+  } else if (data.hasOwnProperty('_id') !== true) {
+      return callback(new Error('400Missing _id property from data'));
+  } else if (data.hasOwnProperty('_rev') !== true) {
+      return callback(new Error('400Missing _rev property from data'));
+  } else {
+      db.remove(data, function(err, response) {
+          if (err) return callback(err);
+          if (response) return callback(null, response);
+      });
+  }
+}
 
 //  -----  Public Functions  -----  //
 function createMobile(data, callback) {
@@ -106,6 +138,34 @@ function createView(designDoc, callback) {
         return callback(err);
     });
   }
+}
+
+function updateMobile(data, callback) {
+  updateDoc(data, callback)
+}
+
+function deleteMobile(data, callback) {
+  deleteDoc(data, callback)
+}
+
+function getByMake(make, callback) {
+    db.allDocs({
+        include_docs: true,
+        attachments: true
+    }, function(err, response) {
+        if (err) {
+            return callback(err);
+        }
+        var results = []
+        R.map(function(item) {
+            if (R.prop('name', item.doc)) {
+                if (item.doc.name === make) {
+                    results.push(item.doc)
+                }
+            }
+        }, R.prop('rows', response) )
+        callback(null, results)
+    })
 }
 
 module.exports = dal
