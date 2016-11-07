@@ -16,7 +16,12 @@ app.get('/', function (req, res) {
 //Add an item
 app.post('/automobiles', function(req, res, next) {       // (x)
   dal.createMobile(req.body, function(err, body) {
-    if (err) console.log('Didnt work')
+    if (err) {
+      var newErr = new HTTPError(500, 'Bad Sumtin', {
+        m: 'Something went wrong'
+      })
+      return next(newErr)
+    }
     if (body) {
       res.append('content-type', 'application/json')
       res.status(500).send(JSON.stringify(body, null, 2))
@@ -30,9 +35,10 @@ app.get('/automobiles/:id', function(req, res, next) {    // (x)
 
     dal.getMobile(mobileID, function(err, data) {
         if(err) {
-            var responseError = BuildResponseError(err)
-            //console.log("Error calling dal.getReliefEffort", err)
-            return next(new HTTPError(responseError.status, responseError.message))
+          var newErr = new HTTPError(500, 'Bad Sumtin', {
+            m: 'Something went wrong'
+          })
+          return next(newErr)
         }
         if(data) {
             res.append('Content-type', 'application/json')
@@ -46,6 +52,7 @@ app.get('/automobiles', function(req, res, next) {        // (x)
   const sortBy = req.query.sortby || 'automobiles';
   const sortToken = req.query.sorttoken || '';
   const limit = req.query.limit || 5;
+  console.log(sortBy)
 
   dal.listMobiles(sortBy, sortToken, limit, function(err, body){
     if (err) {
@@ -88,11 +95,10 @@ app.put('/automobiles/:id', function(req, res, next) {    // (x)
 })
 
 //Delete an item
-app.delete('/automobiles/:id', function(req, res, next) { // ( )
+app.delete('/automobiles/:id', function(req, res, next) { // (x)
   dal.getMobile(req.params.id, function(err, data) {
     if (err) return next(err)
     if (data) {
-      console.log('Data: ' + data)
       dal.deleteMobile(data, function(deletedErr, deletedBody) {
         if (deletedErr) {
           var newErr = new HTTPError(500, 'Bad Request ID', {
@@ -109,7 +115,8 @@ app.delete('/automobiles/:id', function(req, res, next) { // ( )
   })
 })
 
-app.get('/make/:name', function(req, res, next) {
+//Get items by make
+app.get('/make/:name', function(req, res, next) {         // (x)
   const make = req.params.name
   dal.getByMake(make, function(err, body) {
     if (err) return next(console.log("Get By Make Error"))

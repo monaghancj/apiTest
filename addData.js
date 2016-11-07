@@ -7,28 +7,28 @@ var data = [
     "description": "2016_model_s",
     "inStock": "true",
     "retailCost": "66000",
-    "dateAvailable": "now"
+    "dateAvailable": "2016"
   },
   {
     "name":"tesla",
     "description": "2016_model_x",
     "inStock": "true",
     "retailCost": "74000",
-    "dateAvailable": "now"
+    "dateAvailable": "2016"
   },
   {
     "name":"land_rover",
     "description": "2017_range_rover",
     "inStock": "false",
     "retailCost": "85650",
-    "dateAvailable": "01-01-17"
+    "dateAvailable": "2017-01-01"
   },
   {
     "name":"honda",
     "description": "2017_pilot",
     "inStock": "false",
     "retailCost": "30345",
-    "dateAvailable": "01-01-17"
+    "dateAvailable": "2017-01-17"
   }
 ]
 

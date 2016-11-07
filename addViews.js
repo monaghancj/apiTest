@@ -7,7 +7,7 @@ var designDoc = {
         'automobiles': {
             map: function(doc) {
                 if (doc.type === 'automobile') {
-                    emit(doc.name + doc._id);
+                    emit(doc._id);
                 }
             }.toString()
         }

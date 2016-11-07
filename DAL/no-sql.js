@@ -43,9 +43,9 @@ function getDocByID(id, callback) {
 function listDocs(sortBy, startKey, limit, callback) {
   //Validate perams
   if (sortBy === undefined || sortBy === null ) return callback(new Error("listDocs sortBy null/undefined"))
-
+  console.log(limit)
   limit = startKey !== '' ? limit + 1 : limit
-
+  console.log(limit)
   db.query(sortBy, {
     startkey: startKey,
     limit: limit
@@ -86,6 +86,7 @@ function deleteDoc(data, callback) {
       });
   }
 }
+
 
 //  -----  Public Functions  -----  //
 function createMobile(data, callback) {

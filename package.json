@@ -1,0 +1,31 @@
+{
+  "name": "apitest",
+  "version": "1.1.0",
+  "description": "API and DAL to support CRUD operations on automobile items",
+  "main": "addData.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monaghancj/apiTest.git"
+  },
+  "author": "Cameron Monaghan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monaghancj/apiTest/issues"
+  },
+  "homepage": "https://github.com/monaghancj/apiTest#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "node-http-error": "^1.0.0",
+    "node-uuid": "^1.4.7",
+    "pouchdb-http": "^5.4.5",
+    "pouchdb-mapreduce": "^5.4.5",
+    "server-summary": "^6.0.1",
+    "url": "^0.11.0",
+    "zero-config": "^7.0.1"
+  }
+}

@@ -1,6 +1,6 @@
 To run this application you must do the following:
 1. Install all node modules
-  $ node init
+  $ npm install
 
 2. Create and Populate the database with addData.js
   $ node addData.js
